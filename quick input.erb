@@ -1,0 +1,29 @@
+<h1>Create a Post</h1>
+<form action="/" method="post">
+  <input type="text" name="foo[]" placeholder= "foo">
+  <textarea rows="10" cols "15" name="foo[]" placeholder="stuff..."></textarea>
+  <input type="submit">
+</form>
+
+
+  belongs_to :author, class_name: "User", foreign_key: :user_id
+  has_many :comments
+  has_many :commenters, through: :comments, source: :user
+
+
+  <h1>Edit your a Post</h1>
+<form action="/posts/<%= @post.id %>" method="post">
+  <input type="text" name="post[title]" placeholder= "title" value="<%= @post.title %>">
+  <textarea rows="10" cols "15" name="post[body]" placeholder="stuff..."> <%= @post.body %> </textarea>
+  <input type="submit">
+</form>
+
+<ul>
+  <% @posts.each do |post| %>
+  <a href='/posts/<%= post.id %>'> <li class="post_title"><%= post.title %></li></a>
+  <li class="post_email"><%= post.author.email %></li>
+    <% if session[:user_id] == post.author.id %>
+      <a href='/posts/<%= post.id %>/edit'> Edit </a>
+    <% end %>
+  <% end %>
+</ul>
